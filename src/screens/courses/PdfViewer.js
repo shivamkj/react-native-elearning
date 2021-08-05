@@ -12,7 +12,7 @@ import {showToast} from '../../utils/functions';
 
 const PdfViewerScreen = ({route: {params}, navigation}) => {
   const createNote = () => {
-    Clipboard.getString().then((copiedText) => {
+    Clipboard.getString().then(copiedText => {
       if (!copiedText) showToast('No text copied');
       else
         navigation.navigate('EditNote', {
@@ -21,8 +21,6 @@ const PdfViewerScreen = ({route: {params}, navigation}) => {
         });
     });
   };
-
-  console.log({id: params.id, link: params.link});
 
   return (
     <ScreenContainer>

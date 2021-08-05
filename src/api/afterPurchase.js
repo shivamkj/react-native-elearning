@@ -2,9 +2,7 @@ import client from './client';
 
 const getMyCourses = () => client.get('course/get_paid_course');
 
-const getPurchasedCourses = () => {
-  return client.get('home/get_purchase_course_cnt');
-};
+const getPurchasedCourses = () => client.get('home/get_purchase_course_cnt');
 
 const getPhases = courseId =>
   client.get('course/get_phase_by_course', {params: {course_id: courseId}});

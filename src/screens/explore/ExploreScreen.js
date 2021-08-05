@@ -8,7 +8,6 @@ const ExploreScreen = ({navigation}) => {
 
   useEffect(() => {
     getPurchasedCourses().then(result => {
-      console.log(result.data);
       if (result.data.response == 301) {
         setPurchasedCourses(false);
         return;

@@ -29,7 +29,6 @@ const TestScreen = ({navigation, route: {params}}) => {
     dispatch({type: 'loading', payload: LoadingIndicator});
     getExam(params.examId, params.eid)
       .then(response => {
-        console.log(response.data);
         if (response.data.response == 100) {
           set({type: 'TestStarted', sections: response.data.sections});
           dispatch({type: 'loading', payload: false});

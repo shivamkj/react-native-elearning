@@ -76,7 +76,7 @@ const TestOverviewScreen = ({navigation, route: {params}}) => {
         ))}
       </ScrollView>
       <Button
-        style={{width: '90%'}}
+        style={{width: '90%', marginBottom: 20}}
         title="SEE RESULT"
         onPress={() =>
           navigation.replace('TestResult', {

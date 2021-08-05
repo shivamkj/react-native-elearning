@@ -16,12 +16,10 @@ const useFetch = (
     apiFunc
       .then(result => {
         const response = result.data.response;
-        // console.log("data",result.data);
         if (response == 100) {
           setData(result.data);
           dispatch({type: 'loading', payload: false});
         } else if (response == 203) {
-          console.log('NO data found');
           setData(false);
           dispatch({type: 'loading', payload: false});
         } else if (response == 301 || response == 302)

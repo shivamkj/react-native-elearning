@@ -8,13 +8,13 @@ let authDetails;
 const storeUserDetails = (fullName, email) => {
   return AsyncStorage.setItem(detailsKey, JSON.stringify({fullName, email}))
     .then((_) => (userDetails = {fullName, email}))
-    .catch(() => console.log('Error while storing'));
+    .catch(() => console.error('Error while storing'));
 };
 
 const storeAuthDetails = (userId, authToken) => {
   return AsyncStorage.setItem(authKey, JSON.stringify({userId, authToken}))
     .then((_) => (authDetails = {userId, authToken}))
-    .catch(() => console.log('Error while storing'));
+    .catch(() => console.error('Error while storing'));
 };
 
 const getUserDetails = () => {
@@ -28,7 +28,7 @@ const getUserDetails = () => {
       userDetails = JSON.parse(result);
       return userDetails;
     })
-    .catch(() => console.log('Error while fetching'));
+    .catch(() => console.error('Error while fetching'));
 };
 
 const getAuthDetails = () => {
@@ -42,7 +42,7 @@ const getAuthDetails = () => {
       authDetails = JSON.parse(result);
       return authDetails;
     })
-    .catch(() => console.log('Error while fetching'));
+    .catch(() => console.error('Error while fetching'));
 };
 
 const removeUser = async () => {
@@ -50,7 +50,7 @@ const removeUser = async () => {
     await AsyncStorage.removeItem(authKey);
     await AsyncStorage.removeItem(detailsKey);
   } catch {
-    console.log('Error while removing');
+    console.error('Error while removing');
   } finally {
     userDetails = undefined;
     authDetails = undefined;

@@ -23,10 +23,9 @@ const PaymentDetailsScreen = ({navigation, route: {params}}) => {
   const couponCode = useRef('');
 
   const applyCoupon = () => {
-    console.log(couponCode.current);
     if (couponDiscount > 0) setCouponDiscount(0);
     else {
-      setCouponDiscount(100);
+      setCouponDiscount(0);
     }
   };
 
