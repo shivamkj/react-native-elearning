@@ -7,21 +7,34 @@ import StructureTab from './views/StructureTab';
 import useFetch from '../../utils/useFetch';
 
 const initialLayout = {width: Dimensions.get('window').width};
-const renderTabBar = props => (
+// const renderTabBar = props => (
+//   <TabBar
+//     {...props}
+//     style={{backgroundColor: '#fff'}}
+//     activeColor="#EA3323"
+//     inactiveColor="#000"
+//     indicatorStyle={{backgroundColor: '#EA3323'}}
+//     renderLabel={() => <Text>Hii</Text>}
+//     renderTabBarItem={props => {
+//       console.log(props);
+//       return <Text>Hii</Text>;
+//     }}
+//     scrollEnabled
+//   />
+// );
+
+const renderTabBar = (props) => (
   <TabBar
     {...props}
     style={{backgroundColor: '#fff'}}
+    tabStyle={{width: 'auto'}}
     activeColor="#EA3323"
     inactiveColor="#000"
     indicatorStyle={{backgroundColor: '#EA3323'}}
-    renderLabel={() => <Text>Hii</Text>}
-    renderTabBarItem={props => {
-      console.log(props);
-      return <Text>Hii</Text>;
-    }}
     scrollEnabled
   />
 );
+
 const renderScene = ({route}) => (
   <StructureTab courseId={route.courseId} phaseId={route.key} />
 );

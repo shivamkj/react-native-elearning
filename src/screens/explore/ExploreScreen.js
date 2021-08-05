@@ -9,6 +9,10 @@ const ExploreScreen = ({navigation}) => {
   useEffect(() => {
     getPurchasedCourses().then(result => {
       console.log(result.data);
+      if (result.data.response == 301) {
+        setPurchasedCourses(false);
+        return;
+      }
       if (result.data.response != 100) return;
       if (result.data.course.length > 1) setPurchasedCourses(false);
       else setPurchasedCourses(false);

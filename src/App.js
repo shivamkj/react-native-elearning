@@ -9,7 +9,7 @@ import OfflineIndicator from './components/OfflineIndicator';
 import SplashScreen from 'react-native-splash-screen';
 import {getAuthDetails} from './utils/authStorage';
 import {setHeader} from './api/client';
-import {navigationRef} from './utils/RootNavigator';
+import {navigationRef} from './utils/notification';
 import {configureNotification} from './utils/notification';
 import Explore from './ShimmerLayouts/Explore';
 

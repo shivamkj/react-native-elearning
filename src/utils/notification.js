@@ -1,7 +1,13 @@
+import {createRef} from 'react';
 import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
-import {navigate} from './RootNavigator';
+
+export const navigationRef = createRef();
+
+export function navigate(name, params) {
+  navigationRef.current?.navigate(name, params);
+}
 
 const configureNotification = () => {
   messaging().onMessage(async remoteMessage => {
@@ -48,7 +54,7 @@ const setBackgroundNotification = () => {
 
 const setLocalNotification = (title, message, data) =>
   PushNotification.localNotification({
-    channelId: "firebase",
+    channelId: 'firebase',
     title,
     message,
     userInfo: data,
