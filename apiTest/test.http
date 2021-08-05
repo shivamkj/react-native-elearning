@@ -1,0 +1,25 @@
+@email= suraj@linescripts.com
+###
+GET {{baseUrl}}course/purchased_course_content?course_id=&12phase_id=Phase 1
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}exam/get_exam?exam_id=1745&eid=5e0375a5e1145
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}exam/get_result_mobile
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}exam/get_result?exam_id=1815&eid=5e4e1fcc9e616
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}Exam_analysis/get_analysis?exam_id=1835
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}home/get_purchase_course_cnt
+Access-Token: {{accessToken}}
+User-id: {{userId}}

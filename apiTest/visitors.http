@@ -1,0 +1,46 @@
+###
+GET {{baseUrl}}visitor/get_popular_courses_and_free_resourses?exam_type_id=
+###
+GET {{baseUrl}}visitor/get_course_details?course_id=18
+# Access-Token: {{accessToken}}
+# User-id: {{userId}}
+###
+GET {{baseUrl}}visitor/course_structure?course_id=13&phase_id=NABARD
+###
+GET {{baseUrl}}visitor/purchase_course?course_id=18
+### 
+GET {{baseUrl}}visitor/get_phase_by_course?course_id=11
+###
+GET {{baseUrl}}visitor/purchase_course?course_id=11
+###
+GET {{baseUrl}}home/get_purchase_course_cnt
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}pre_purchase/get_exam_types
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}/pre_purchase/get_exam_types
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+# {
+#     "course_id": "13",
+#     "course_title": "NABARD Grade A ARD Special Module Phase I and Phase II",
+# },
+# {
+#     "course_id": "12",
+#     "course_title": "RBI Assistant 2019 Test Series",
+# },
+# {
+#     "course_id": "14",
+#     "course_title": "RBI Assistant 2020 Mains GA & Computer Special Module Course",
+# },
+# {
+#     "course_id": "11",
+#     "course_title": "RBI Grade B  Integrated Course 2020",
+# },
+# {
+#     "course_id": "15",
+#     "course_title": "SEBI Grade A 2020 Paper 2  Phase I & Phase II General Stream Special Module",
+# }

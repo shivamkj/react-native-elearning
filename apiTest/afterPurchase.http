@@ -1,0 +1,32 @@
+###
+GET {{baseUrl}}course/get_paid_course
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+### 
+GET  {{baseUrl}}course/get_phase_by_course?course_id=20
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+### 
+GET  {{baseUrl}}course/purchased_course_content?course_id=18&phase_id=Phase I
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET  {{baseUrl}}course/purchased_course_content?course_id=13&phase_id=NABARD
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}after_purchase/feeds?course_id=22
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}news/get_news
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+### 
+GET {{baseUrl}}news/get_test_analysis
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}/notification/get_notification
+Access-Token: {{accessToken}}
+User-id: {{userId}}

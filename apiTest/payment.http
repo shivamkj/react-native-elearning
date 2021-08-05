@@ -1,0 +1,45 @@
+@paymentToken = FkAmDMljTdsdh6P9aBhRYwgGVpAyik
+# @accessToken= 7d6983c04899589fa9c833169e214e177d72cf3a608674c633edb6fa649020bc
+@UserId = 5974
+###
+GET  {{baseUrl}}payment/create_access_token
+Access-Token: {{accessToken}}
+User-id: {{UserId}}
+###
+GET {{baseUrl}}payment/payment_request?access_token={{paymentToken}}&userid={{UserId}}&course_id=11
+Access-Token: {{accessToken}}
+User-id: {{UserId}}
+###
+GET {{baseUrl}}insta/check_mobile_status?payment_id=
+Access-Token: {{accessToken}}
+User-id: {{UserId}}
+###
+GET {{baseUrl}}home/get_payments
+Access-Token: {{accessToken}}
+User-id: {{UserId}}
+###
+POST {{baseUrl}}/payment/coupon_apply
+Access-Token: {{accessToken}}
+User-id: {{UserId}}
+Content-Type: application/json
+
+{
+  "coupon": "TARGET10"
+}
+###
+POST {{baseUrl}}/payment/coupon_remove
+Access-Token: {{accessToken}}
+User-id: {{UserId}}
+Content-Type: application/json
+
+{
+  "coupon": "TARGET10"
+}
+
+
+# {
+#   "access_token": "Huvf0kfGPOnCzdW4gQm7e3ilumq7zi",
+#   "expires_in": 36000,
+#   "token_type": "Bearer",
+#   "scope": "payouts:read payments:read payments:fulfil payments:refund users:read users:write payment-requests:read payment-requests:write gateway-orders:read gateway-orders:write convenience-fee:read"
+# }

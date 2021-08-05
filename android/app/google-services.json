@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "495817378965",
+    "project_id": "target-rbi-474b7",
+    "storage_bucket": "target-rbi-474b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495817378965:android:4e8c2bb3bd450e98261f9c",
+        "android_client_info": {
+          "package_name": "in.edua.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495817378965-3gmccs0qfgd3jkmot561hq6f0v5qpn79.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.edua.app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "495817378965-gekp65n5sgl1gv5kn7m186r59q57ta6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJFEK7Y3S3DCAPS-iJQ_vGR0NlyumDu5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495817378965-gekp65n5sgl1gv5kn7m186r59q57ta6u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

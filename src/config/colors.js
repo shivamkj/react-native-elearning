@@ -1,0 +1,18 @@
+export default {
+  // primary: "#44AF69",
+  // secondary: "#4ecdc4",
+  medium: "#6e6969",
+  light: "#F9F9F9",
+  dark: "#0c0c0c",
+  // danger: "#ff5252",
+  lightGrey: "#E4E6EC",
+  black: "#000000",
+  white: "#ffffff",
+  sectionBackground: "#F7F8FC",
+  subText: "#666666",
+  primaryGreen: "#0150B5",
+  link: "#3458A1",
+  redAccent: "#EA3323",
+  greenAccent: "#2DD066",
+  gunmetal: "#273043",
+};

@@ -1,0 +1,16 @@
+###
+GET {{baseUrl}}note/add_note_to_pdf?note=0 Notes Test&pdf_id=0
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}note/delete_note?note_id=31
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}note/get_notes?course_id=11
+Access-Token: {{accessToken}}
+User-id: {{userId}}
+###
+GET {{baseUrl}}home/get_purchase_course_cnt
+Access-Token: {{accessToken}}
+User-id: {{userId}}
