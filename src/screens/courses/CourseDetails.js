@@ -67,6 +67,8 @@ const CourseDetailsScreen = ({navigation, route: {params}}) => {
       <View style={[styles.bottomBar, defaultStyles.shadowDark]}>
         {isPurchased == false ? (
           <PurchaseBottomBar
+            actualFees={courseDetails.data.course_main_fees}
+            fees={courseDetails.data.course_fees}
             courseId={params.courseId}
             navigation={navigation}
           />

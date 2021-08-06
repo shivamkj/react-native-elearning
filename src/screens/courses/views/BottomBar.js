@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {CustomText as Text, Button} from '../../../components';
 
-const PurchaseBottomBar = ({courseId, navigation}) => (
+const PurchaseBottomBar = ({courseId, discountPercent, fees, navigation}) => (
   <>
     <View>
-      <Text style={styles.price}>₹ {1344}</Text>
+      <Text style={styles.price}>₹ {fees}</Text>
       <Text style={{color: '#6e6969'}}>One time payment</Text>
     </View>
     <Button

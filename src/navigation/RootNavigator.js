@@ -5,6 +5,7 @@ import EmailAuthScreen from '../screens/auth/EmailAuth';
 import LoginScreen from '../screens/auth/Login';
 import RegistrationScreen from '../screens/auth/Registration';
 import ForgetPasswordScreen from '../screens/auth/ForgetPassword';
+import AddDetailsScreen from '../screens/auth/AddDetails';
 
 const RootStack = createStackNavigator();
 
@@ -17,7 +18,11 @@ const RootNavigator = ({isLoggedIn}) => (
         <RootStack.Screen name="EmailAuth" component={EmailAuthScreen} />
         <RootStack.Screen name="Login" component={LoginScreen} />
         <RootStack.Screen name="Registration" component={RegistrationScreen} />
-        <RootStack.Screen name="ForgetPassword" component={ForgetPasswordScreen} />
+        <RootStack.Screen name="AddDetails" component={AddDetailsScreen} />
+        <RootStack.Screen
+          name="ForgetPassword"
+          component={ForgetPasswordScreen}
+        />
       </>
     )}
   </RootStack.Navigator>

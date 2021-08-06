@@ -10,7 +10,7 @@ import {checkEmail} from '../../api/auth';
 import {useGlobalContext} from '../../utils/globalContext';
 import {colors, defaultStyles} from '../../config';
 import {BackArrow} from '../../assets/icons';
-import {showToast} from '../../utils/functions';
+import {isValidEmail, showToast} from '../../utils/functions';
 
 const EmailAuthScreen = ({navigation}) => {
   const {dispatch} = useGlobalContext();
@@ -24,8 +24,11 @@ const EmailAuthScreen = ({navigation}) => {
       setInputFocused(false);
       inputRef.current.blur();
     };
-    Keyboard.addListener('keyboardDidHide', _keyboardDidHide);
-    return () => Keyboard.removeListener('keyboardDidHide', _keyboardDidHide);
+    const subscription = Keyboard.addListener(
+      'keyboardDidHide',
+      _keyboardDidHide,
+    );
+    return () => subscription.remove();
   }, []);
 
   const handleSubmit = () => {
@@ -36,21 +39,17 @@ const EmailAuthScreen = ({navigation}) => {
     }
     dispatch({type: 'loading', payload: LoadingIndicator});
     checkEmail(email.current)
-      .then((result) => {
+      .then(result => {
         dispatch({type: 'loading', payload: false});
+        console.log(result.data);
         if (result.data.response == 100)
           navigation.navigate('Login', {
             email: result.data.email,
             name: result.data.username,
           });
-        else if (result.data.response == 206)
-          navigation.navigate('Registration', {
-            email: result.data.email,
-            userId: result.data.userid,
-          });
-        else throw 'Unknown Error occured';
+        else alert('You are not registered. Please register first');
       })
-      .catch((err) => {
+      .catch(err => {
         showToast(err);
         dispatch({type: 'loading', payload: false});
       });
@@ -99,7 +98,7 @@ const EmailAuthScreen = ({navigation}) => {
             autoCorrect={false}
             keyboardType="email-address"
             textContentType="emailAddress"
-            onChangeText={(value) => (email.current = value)}
+            onChangeText={value => (email.current = value)}
             style={styles.input}
             onFocus={() => setInputFocused(true)}
             onBlur={() => setInputFocused(false)}
@@ -110,35 +109,17 @@ const EmailAuthScreen = ({navigation}) => {
           title="CONTINUE"
           onPress={handleSubmit}
         />
-        {/* <View style={styles.sepratorContainer}>
-          <View style={styles.sepratorBorder}></View>
-          <Text style={styles.seprator}>OR</Text>
-          <View style={styles.sepratorBorder} />
-        </View>
-        <TouchableOpacity style={styles.googleLogin}>
-          <Image
-            style={styles.googleLogo}
-            resizeMode={'contain'}
-            source={require('../../assets/google-logo.png')}
-          />
-          <Text style={styles.googleLoginAppText}>Sing in with Google</Text>
-        </TouchableOpacity> */}
+        <Text
+          onPress={() => navigation.navigate('Registration')}
+          style={styles.register}>
+          Don’t have an account? Register Now
+        </Text>
       </View>
     </ScreenContainer>
   );
 };
 
-function isValidEmail(value) {
-  try {
-    const at = value.lastIndexOf('@');
-    const dot = value.lastIndexOf('.');
-    return at > 0 && dot > at + 1 && dot < value.length - 1;
-  } catch {
-    return false;
-  }
-}
-
-const getBorderColor = (error) => {
+const getBorderColor = error => {
   if (error == false) return colors.greenAccent;
   else if (error) return colors.redAccent;
   else return colors.sectionBackground;
@@ -169,7 +150,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.sectionBackground,
     borderRadius: 4,
     flexDirection: 'row',
-    // paddingVertical: 4,
     paddingHorizontal: 6,
     borderWidth: 1,
   },
@@ -235,23 +215,11 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginBottom: 24,
   },
-  googleLogin: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 13,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-  },
-  googleLoginAppText: {
+  register: {
+    marginTop: 16,
     fontSize: 16,
-  },
-  googleLogo: {
-    height: 18,
-    width: 18,
-    marginRight: 10,
+    fontFamily: 'Bold-700',
+    textAlign: 'center',
   },
 });
 

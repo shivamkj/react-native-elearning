@@ -12,6 +12,8 @@ import defaultStyles from '../../config/styles';
 import Info from './views/Info';
 import {getPurchaseDetails} from '../../api/visitors';
 import Profile from './views/Profile';
+import {checkCoupon} from '../../api/payment';
+import {showToast} from '../../utils/functions';
 // import Checkbox from '../../components/Checkbox';
 
 // Setup for multiple payment options commented
@@ -23,16 +25,46 @@ const PaymentDetailsScreen = ({navigation, route: {params}}) => {
   const couponCode = useRef('');
 
   const applyCoupon = () => {
-    if (couponDiscount > 0) setCouponDiscount(0);
-    else {
+    if (couponDiscount > 0) {
       setCouponDiscount(0);
+      return;
     }
+    if (couponCode.current == '') {
+      setCouponDiscount(0);
+      return;
+    }
+    checkCoupon(couponCode.current, params.courseId).then(result => {
+      if (result.data.response == 100) {
+        const discountPercent = parseInt(result.data.discount_percent);
+        const courseFees = details.data.course_fees;
+        const discount = (courseFees * discountPercent) / 100;
+        setCouponDiscount(discount);
+        console.log(result.data.discount_percent);
+        showToast('Coupon Code applied');
+      } else {
+        setCouponDiscount(0);
+        showToast('Invalid Coupon Code');
+      }
+    });
   };
 
   const toIntamojoPayment = () =>
     navigation.navigate('InstamojoPayment', {
       courseId: params.courseId,
+      coupon: couponDiscount > 0 ? couponCode.current : undefined,
     });
+
+  const getPrice = () => {
+    const discount =
+      (details.data.course_fees * details.data.discount_perc) / 100;
+    console.log('dis' + discount);
+    console.log('cd', couponDiscount);
+    return details.data.course_fees - (discount + couponDiscount);
+  };
+
+  const getDiscount = () => {
+    return (details.data.course_fees * details.data.discount_perc) / 100;
+  };
 
   if (!details) return null;
   return (
@@ -59,7 +91,7 @@ const PaymentDetailsScreen = ({navigation, route: {params}}) => {
           rightText={new Date().toJSON().slice(0, 10).replace(/-/g, '- ')}
         />
         <Info leftText="Amount" rightText={'₹ ' + details.data.course_fees} />
-        <Info leftText="Discount" rightText="- ₹ 0" />
+        <Info leftText="Discount" rightText={`- ₹ ${getDiscount()}`} />
         <Info leftText="Applied Coupon" rightText={`- ₹ ${couponDiscount}`} />
 
         <View style={styles.couponContainer}>
@@ -75,11 +107,7 @@ const PaymentDetailsScreen = ({navigation, route: {params}}) => {
           onChangeText={v => (couponCode.current = v)}
         />
         <View style={[defaultStyles.border, {marginVertical: 16}]} />
-        <Info
-          leftText="Total"
-          rightText={'₹ ' + (details.data.course_fees - couponDiscount)}
-          bold
-        />
+        <Info leftText="Total" rightText={'₹ ' + getPrice()} bold />
         <View style={[defaultStyles.border, {marginVertical: 16}]} />
         {/* <Text style={styles.heading}>Select Payment Option</Text>
         {paymentOptions.map((item, index) => (
@@ -97,7 +125,7 @@ const PaymentDetailsScreen = ({navigation, route: {params}}) => {
         ))} */}
       </ScrollView>
       <Button
-        title={'PAY ₹ ' + +(details.data.course_fees - couponDiscount)}
+        title={'PAY ₹ ' + getPrice()}
         style={{borderRadius: 0}}
         onPress={toIntamojoPayment}
       />

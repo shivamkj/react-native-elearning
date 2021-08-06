@@ -1,12 +1,12 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, View, TextInput} from 'react-native';
-import {genrateOtp} from '../../../api/auth';
+import {genrateOtp, verifyOtp} from '../../../api/auth';
 import {CustomText as Text} from '../../../components';
 import {colors} from '../../../config';
 
 const TIME_LIMIT = 30;
 
-const OtpInput = ({onVerificationSuccess, email}) => {
+const OtpInput = ({onVerificationSuccess, email, userId}) => {
   const enteredOtp = useRef([]);
   const otpTextInput = [];
   const [error, setError] = useState(false);
@@ -14,11 +14,11 @@ const OtpInput = ({onVerificationSuccess, email}) => {
   const otpResent = useRef(0);
   const otp = useRef([]);
 
-  useEffect(() => {
-    genrateOtp(email).then((result) => {
-      otp.current.push(parseInt(result.data.otp));
-    });
-  }, []);
+  // useEffect(() => {
+  //   genrateOtp(email).then((result) => {
+  //     otp.current.push(parseInt(result.data.otp));
+  //   });
+  // }, []);
 
   const handleChange = (index, value) => {
     if (index < otpTextInput.length - 1 && value) {
@@ -28,15 +28,17 @@ const OtpInput = ({onVerificationSuccess, email}) => {
     if (index === otpTextInput.length - 1) {
       otpTextInput[index].blur();
       const finalOtp = enteredOtp.current.join('');
-      if (finalOtp.length == 4) handleSubmit(Number(finalOtp));
+      if (finalOtp.length == 4) handleSubmit(finalOtp);
     }
   };
 
-  const handleSubmit = (enteredOtp) => {
-    if (otp.current.includes(enteredOtp)) {
-      setError(null);
-      onVerificationSuccess();
-    } else setError('Wrong OTP entered!');
+  const handleSubmit = enteredOtp => {
+    verifyOtp(userId, email, enteredOtp).then(result => {
+      if (result.data.response == 100) {
+        setError(null);
+        onVerificationSuccess();
+      } else setError('Wrong OTP entered!');
+    });
   };
 
   const focusPrevious = (key, index) => {
@@ -47,7 +49,7 @@ const OtpInput = ({onVerificationSuccess, email}) => {
 
   useEffect(() => {
     const timeout = setInterval(() => {
-      setTimeLeft((prevTime) => {
+      setTimeLeft(prevTime => {
         if (prevTime == 0) {
           clearInterval(timeout);
           return 0;
@@ -62,7 +64,7 @@ const OtpInput = ({onVerificationSuccess, email}) => {
     if (error == null) return;
     if (otpResent.current == 2) alert('OTP cannot be sent more than 2 times.');
     else if (timeLeft == 0) {
-      genrateOtp(email).then((result) =>
+      genrateOtp(email).then(result =>
         otp.current.push(parseInt(result.data.otp)),
       );
       setTimeLeft(TIME_LIMIT);
@@ -87,9 +89,9 @@ const OtpInput = ({onVerificationSuccess, email}) => {
           keyboardType="numeric"
           maxLength={1}
           key={index}
-          onChangeText={(v) => handleChange(index, v)}
-          onKeyPress={(e) => focusPrevious(e.nativeEvent.key, index)}
-          ref={(ref) => (otpTextInput[index] = ref)}
+          onChangeText={v => handleChange(index, v)}
+          onKeyPress={e => focusPrevious(e.nativeEvent.key, index)}
+          ref={ref => (otpTextInput[index] = ref)}
           editable={error != null}
         />
       ));

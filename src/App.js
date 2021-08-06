@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect, useMemo, useReducer, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, View} from 'react-native';
 import {GlobalContext} from './utils/globalContext';
 import {reducer, initialState} from './utils/globalReducer';
 import RootNavigator from './navigation/RootNavigator';
@@ -41,7 +41,7 @@ const App = () => {
       {text: 'OK', onPress: () => dispatch({type: 'error', payload: false})},
     ]);
 
-  if (isStarting == true) return <Explore />;
+  if (isStarting == true) return <View />;
 
   return (
     <>

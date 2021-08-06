@@ -20,7 +20,12 @@ const InstamojoPaymentScreen = ({navigation, route: {params}}) => {
         const {userId} = getAuthDetails();
         const {
           data: {longurl},
-        } = await makePaymentRequest(access_token, userId, params.courseId);
+        } = await makePaymentRequest(
+          access_token,
+          userId,
+          params.courseId,
+          params.coupon,
+        );
 
         if (longurl == undefined) throw Error();
         else setUrl(longurl);
@@ -31,7 +36,7 @@ const InstamojoPaymentScreen = ({navigation, route: {params}}) => {
     })();
   }, []);
 
-  const onNavigationChange = (webViewState) => {
+  const onNavigationChange = webViewState => {
     const {url: currentUrl} = webViewState;
     if (currentUrl.startsWith(REDIRECT_URL)) {
       const {payment_status: paymentStatus} = getQueryParams(currentUrl);
@@ -53,10 +58,10 @@ const InstamojoPaymentScreen = ({navigation, route: {params}}) => {
   );
 };
 
-const getQueryParams = (url) => {
+const getQueryParams = url => {
   const splitted = url.slice(url.indexOf('?') + 1).split('&');
   const params = {};
-  splitted.map((e) => {
+  splitted.map(e => {
     const keyValue = e.split('=');
     params[keyValue[0]] = keyValue[1];
   });

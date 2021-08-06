@@ -1,35 +1,34 @@
-@paymentToken = FkAmDMljTdsdh6P9aBhRYwgGVpAyik
-# @accessToken= 7d6983c04899589fa9c833169e214e177d72cf3a608674c633edb6fa649020bc
-@UserId = 5974
+@paymentToken = UjZ2YKSIt03mi3NcfgvIPoTGXVYmdl
 ###
 GET  {{baseUrl}}payment/create_access_token
 Access-Token: {{accessToken}}
-User-id: {{UserId}}
+User-id: {{userId}}
 ###
-GET {{baseUrl}}payment/payment_request?access_token={{paymentToken}}&userid={{UserId}}&course_id=11
+GET {{baseUrl}}payment/payment_request?access_token={{paymentToken}}&userid={{userId}}&course_id=11&coupon=TARGET10
 Access-Token: {{accessToken}}
-User-id: {{UserId}}
+User-id: {{userId}}
 ###
 GET {{baseUrl}}insta/check_mobile_status?payment_id=
 Access-Token: {{accessToken}}
-User-id: {{UserId}}
+User-id: {{userId}}
 ###
 GET {{baseUrl}}home/get_payments
 Access-Token: {{accessToken}}
-User-id: {{UserId}}
+User-id: {{userId}}
 ###
 POST {{baseUrl}}/payment/coupon_apply
 Access-Token: {{accessToken}}
-User-id: {{UserId}}
+User-id: {{userId}}
 Content-Type: application/json
 
 {
-  "coupon": "TARGET10"
+  "coupon": "TARGET10",
+  "course_id": 35
 }
 ###
 POST {{baseUrl}}/payment/coupon_remove
 Access-Token: {{accessToken}}
-User-id: {{UserId}}
+User-id: {{userId}}
 Content-Type: application/json
 
 {

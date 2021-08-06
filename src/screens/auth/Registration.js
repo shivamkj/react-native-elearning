@@ -1,130 +1,88 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {StyleSheet, ScrollView, Keyboard} from 'react-native';
+import React, {useRef} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {
-  CustomText as Text,
   ScreenContainer,
+  CustomText as Text,
   TopHeader,
   Button,
+  LoadingIndicator,
+  TextInput,
 } from '../../components';
-import OtpInput from './views/OtpInput';
-import PasswordInput from './views/PasswordInput';
-import InputField from './views/InputField';
-import {addDetails} from '../../api/auth';
-import {loginUser} from '../../utils/authService';
+import {checkEmail} from '../../api/auth';
 import {useGlobalContext} from '../../utils/globalContext';
+import {isValidEmail, showToast} from '../../utils/functions';
 
-const RegistrationScreen = ({navigation, route: {params}}) => {
+const RegisterationScreen = ({navigation}) => {
+  const email = useRef('');
+  const mobile = useRef('');
+
   const {dispatch} = useGlobalContext();
-  const [otpVerified, setOtpVerified] = useState(false);
-  const [errors, setErrors] = useState([false, false, false, false]);
-  const formData = useRef({
-    firstName: '',
-    lastName: '',
-    mobileNum: '',
-    password: '',
-  });
 
-  useEffect(() => {
-    const _keyboardDidHide = () => Keyboard.dismiss();
-    Keyboard.addListener('keyboardDidHide', _keyboardDidHide);
-    return () => Keyboard.removeListener('keyboardDidHide', _keyboardDidHide);
-  }, []);
-
-  const onSubmit = () => {
-    const errors = validateInput(formData.current);
-    if (errors.length == 0) {
-      setErrors([false, false, false, false]);
-      const {firstName, lastName, mobileNum, password} = formData.current;
-      addDetails(params.userId, firstName, lastName, mobileNum, password).then(
-        (result) => {
-          loginUser(
-            params.userId,
-            result.data.access_token,
-            firstName + ' ' + lastName,
-            params.email,
-            dispatch,
-          );
-        },
-      );
-    } else setErrors(errors);
-  };
-
-  const handleInput = (feild, value) => {
-    formData.current[feild] = value;
+  const onSubmit = async () => {
+    if (mobile.current.length != 10) {
+      showToast('Please Enter Correct Mobile Number without +91 or 0');
+      return;
+    }
+    if (!isValidEmail(email.current)) {
+      showToast('Please Enter Correct Email ID');
+      return;
+    }
+    try {
+      dispatch({type: 'loading', payload: LoadingIndicator});
+      const {data} = await checkEmail(email.current, mobile.current);
+      console.log(data);
+      if (data.response == 206) {
+        dispatch({type: 'loading', payload: false});
+        navigation.navigate('AddDetails', {
+          email: data.email,
+          userId: data.userid,
+        });
+      } else throw data.msg || 'Unknown Error occured';
+    } catch (err) {
+      showToast(err);
+      dispatch({type: 'loading', payload: false});
+    }
   };
 
   return (
     <ScreenContainer>
-      <TopHeader title="Create Account" onBackPress={navigation.goBack} />
-      <ScrollView style={styles.container}>
+      <TopHeader
+        title="Enter your Mobile & Email"
+        onBackPress={navigation.goBack}
+      />
+      <View style={styles.container}>
         <Text style={styles.instructions}>
-          {`Please enter 4 digit code sent to you ${params.email} and verify your email address.`}
+          Please enter your Mobile Number & Email.
         </Text>
-        <OtpInput
-          onVerificationSuccess={() => setOtpVerified(true)}
-          email={params.email}
-        />
-        <InputField
-          editable={otpVerified == true}
-          placeholder="First Name"
-          error={errors[0]}
-          onChangeText={(v) => handleInput('firstName', v)}
-        />
-        <InputField
-          editable={otpVerified == true}
-          placeholder="Last Name"
-          error={errors[1]}
-          onChangeText={(v) => handleInput('lastName', v)}
-        />
-        <InputField
-          editable={otpVerified == true}
-          placeholder="Mobile Number"
-          error={errors[2]}
-          onChangeText={(v) => handleInput('mobileNum', v)}
-          keyboardType="numeric"
+        <TextInput
+          placeholder="Mobile"
+          onChangeText={v => (mobile.current = v)}
           maxLength={10}
         />
-        <PasswordInput
-          editable={otpVerified == true}
-          error={errors[3]}
-          placeholder="Password"
-          onChangeText={(v) => handleInput('password', v)}
+        <View style={{marginBottom: 30}}></View>
+        <TextInput
+          placeholder="Email"
+          onChangeText={v => (email.current = v)}
         />
-        <Button
-          title="REGISTER"
-          onPress={onSubmit}
-          style={{marginTop: 16}}
-          disabled={otpVerified == false}
-        />
-      </ScrollView>
+        <Button title="REGISTER" onPress={onSubmit} style={{marginTop: 16}} />
+      </View>
     </ScreenContainer>
   );
-};
-
-const validateInput = (formData) => {
-  const errors = [];
-  if (!formData.firstName) errors[0] = 'First Name must not be empty';
-  if (formData.mobileNum.length < 10) errors[2] = 'Enter valid Mobile Number';
-  if (formData.password.length < 8)
-    errors[3] = 'Password should be greater than 8 characters';
-  return errors;
 };
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
-    backgroundColor: '#fff',
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: '800',
-    marginBottom: 16,
-    marginTop: 5,
   },
   instructions: {
     fontSize: 13,
-    marginBottom: 18,
+    marginVertical: 16,
+  },
+  link: {
+    padding: 20,
+    color: 'blue',
+    textAlign: 'center',
   },
 });
 
-export default RegistrationScreen;
+export default RegisterationScreen;
