@@ -32,7 +32,7 @@ const NotesListingScreen = ({navigation, route: {params}, setEmpty}) => {
   useEffect(() => {
     dispatch({type: 'loading', payload: NotesListing});
     getNotes(params.courseId)
-      .then((result) => {
+      .then(result => {
         if (result.data.response == 100) setNotes(result.data.data);
         else if (result.data.response == 203)
           setEmpty({
@@ -42,13 +42,13 @@ const NotesListingScreen = ({navigation, route: {params}, setEmpty}) => {
           });
         dispatch({type: 'loading', payload: false});
       })
-      .catch((err) => dispatch({type: 'error', payload: err}));
+      .catch(err => dispatch({type: 'error', payload: err}));
   }, [reload]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if (params.reload == true) {
-        setReload((prev) => !prev);
+        setReload(prev => !prev);
         params.reload = false;
       }
     });
@@ -72,19 +72,19 @@ const NotesListingScreen = ({navigation, route: {params}, setEmpty}) => {
   const handleSearch = () => {
     if (!search.current) return;
     const query = search.current.toLowerCase();
-    const filteredNotes = notes.filter((note) => {
+    const filteredNotes = notes.filter(note => {
       if (note.pdf_title.toLowerCase().includes(query)) return true;
       return false;
     });
     setNotes(filteredNotes);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     dispatch({type: 'loading', payload: LoadingIndicator});
     deleteNote(id)
-      .then((response) => {
+      .then(response => {
         if (response.data.response == 104) {
-          const filteredNotes = notes.filter((note) => note.note_id != id);
+          const filteredNotes = notes.filter(note => note.note_id != id);
           setNotes(filteredNotes);
           showToast('Note deleted successfully');
         } else {
@@ -92,7 +92,7 @@ const NotesListingScreen = ({navigation, route: {params}, setEmpty}) => {
         }
         dispatch({type: 'loading', payload: false});
       })
-      .catch((err) => dispatch({type: 'error', payload: err}));
+      .catch(err => dispatch({type: 'error', payload: err}));
   };
 
   const toNoteSingle = (title, noteContent, noteId) =>
@@ -115,7 +115,7 @@ const NotesListingScreen = ({navigation, route: {params}, setEmpty}) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Search by title"
-            onChangeText={(value) => (search.current = value)}
+            onChangeText={value => (search.current = value)}
             onEndEditing={handleSearch}
           />
           <Search onPress={handleSearch} />
@@ -131,7 +131,7 @@ const NotesListingScreen = ({navigation, route: {params}, setEmpty}) => {
       <FlatList
         data={notes}
         renderItem={renderItem}
-        keyExtractor={(item) => item.note_id}
+        keyExtractor={item => item.note_id}
         ItemSeparatorComponent={ListItemSeparator}
       />
       <Touchable
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   plus: {
     position: 'relative',
-    bottom: 3,
+    bottom: '30%',
     color: '#ffffff',
     fontSize: 60,
   },

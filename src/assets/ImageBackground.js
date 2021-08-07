@@ -1,15 +1,13 @@
-import React from "react";
-import Svg, { Path, Defs, LinearGradient, Stop } from "react-native-svg";
+import React from 'react';
+import Svg, {Path, Defs, LinearGradient, Stop} from 'react-native-svg';
 
 const ImageBackground = () => (
   <Svg
-    // width={}
     height={220}
-    viewBox="0 0 360 220"
+    viewBox="0 0 360 200"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    style={{position: "absolute", zIndex: 98, width: "100%"}}
-  >
+    style={{position: 'absolute', zIndex: 98, width: '100%'}}>
     <Path
       transform="rotate(-180 360 240.537)"
       fill="url(#prefix__paint0_linear)"
@@ -22,8 +20,7 @@ const ImageBackground = () => (
         y1={240.537}
         x2={540}
         y2={481.075}
-        gradientUnits="userSpaceOnUse"
-      >
+        gradientUnits="userSpaceOnUse">
         <Stop />
         <Stop offset={1} stopOpacity={0} />
       </LinearGradient>

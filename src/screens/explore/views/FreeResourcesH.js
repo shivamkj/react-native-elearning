@@ -4,7 +4,8 @@ import {CustomText as Text, Button} from '../../../components';
 import {defaultStyles, colors} from '../../../config';
 import {MockTest} from '../../../assets/icons';
 
-const FreeResourcesH = ({item, navigation}) => {
+const FreeResourcesH = ({item}) => {
+  const navigation = React.useContext(NavigationContext);
   const toExamInstruction = () =>
     navigation.navigate('TestInstruction', {
       name: item.exam_title,

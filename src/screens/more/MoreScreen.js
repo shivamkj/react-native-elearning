@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, View, StyleSheet, Linking, Alert} from 'react-native';
 import {ArrowRight} from '../../assets/icons';
-import {Feedback, Notes, Password, Payment, Logout} from '../../assets/more';
-import {Settings, Support, TestRecord} from '../../assets/more';
+import {Notes, Password, Payment, Logout} from '../../assets/more';
+import {Support, TestRecord} from '../../assets/more';
 import {
   ScreenContainer,
   CustomText as Text,
@@ -27,7 +27,7 @@ const MoreScreen = ({navigation}) => {
     })();
   }, []);
 
-  const handleClick = (title) => {
+  const handleClick = title => {
     if (title == 'Logout') askLogout();
     else if (title == 'Privacy') showPrivacyPolicy();
   };
@@ -72,7 +72,7 @@ const MoreScreen = ({navigation}) => {
 };
 
 const showPrivacyPolicy = () => {
-  Linking.openURL('https://edua.in/privacy_policy.php').catch((err) =>
+  Linking.openURL('https://edua.in/privacy_policy.php').catch(err =>
     showToast('Sorry, Could not load page'),
   );
 };
@@ -100,7 +100,6 @@ const OPTIONS = [
   {title: 'My Notes', icon: Notes, screen: 'MyNotes'},
   {title: 'Payment History', icon: Payment, screen: 'PaymentHistory'},
   {title: 'Help & Support', icon: Support, screen: 'HelpAndSupport'},
-  {title: 'Feedback', icon: Feedback, screen: 'Feedback'},
   {title: 'Logout', icon: Logout, screen: ''},
   {title: 'Privacy', icon: Support, screen: ''},
 ];

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Dimensions} from 'react-native';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {ScreenContainer, CustomText as Text, TopHeader} from '../../components';
+import {ScreenContainer, TopHeader} from '../../components';
 import {getCoursePhases} from '../../api/visitors';
 import StructureTab from './views/StructureTab';
 import useFetch from '../../utils/useFetch';

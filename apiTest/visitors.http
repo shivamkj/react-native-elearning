@@ -11,7 +11,7 @@ GET {{baseUrl}}visitor/purchase_course?course_id=18
 ### 
 GET {{baseUrl}}visitor/get_phase_by_course?course_id=11
 ###
-GET {{baseUrl}}visitor/purchase_course?course_id=35
+GET {{baseUrl}}visitor/get_course_details?course_id=22
 ###
 GET {{baseUrl}}home/get_purchase_course_cnt
 Access-Token: {{accessToken}}

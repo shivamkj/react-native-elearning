@@ -1,10 +1,13 @@
 import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {NavigationContext} from '@react-navigation/native';
 import {CustomText as Text, Button} from '../../../components';
 import {defaultStyles, colors} from '../../../config';
 import {MockTest} from '../../../assets/icons';
 
-const FreeResources = ({item, navigation}) => {
+const FreeResources = ({item}) => {
+  const navigation = React.useContext(NavigationContext);
+
   const toExamInstruction = () =>
     navigation.navigate('TestInstruction', {
       name: item.exam_title,

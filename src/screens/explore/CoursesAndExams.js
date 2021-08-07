@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, FlatList, ScrollView, View} from 'react-native';
+import {NavigationContext} from '@react-navigation/native';
 import {getCourses} from '../../api/visitors';
 import useFetch from '../../utils/useFetch';
 import Explore from '../../ShimmerLayouts/Explore';
@@ -14,25 +15,21 @@ import UpcomingExams from './views/UpcomingExams';
 
 const exams = ['Banking & Insurance', 'SSC', 'UPSC', 'MPSC', 'NET/SET', 'LAW'];
 
-const CoursesAndExams = ({navigation}) => {
+const CoursesAndExams = () => {
   const [courseType, setCourseType] = useState(0);
   const [pickerVisible, setPickerVisible] = useState(false);
   const data = useFetch(getCourses(courseType), [courseType], Explore);
+  const navigation = React.useContext(NavigationContext);
 
-  const renderCourses = ({item}) => (
-    <Courses navigation={navigation} item={item} />
-  );
-  const renderResources = ({item}) => (
-    <FreeResources navigation={navigation} item={item} />
-  );
+  const renderCourses = ({item}) => <Courses item={item} />;
+  const renderResources = ({item}) => <FreeResources item={item} />;
 
-  const _getFreeResources = () => {
-    if (data == false) return null;
-    return data.free_resource[0].exam;
-  };
-  const renderUpcomingExams = ({item}) => {
-    return <UpcomingExams name={item.exam_title} date={item.exam_date} />;
-  };
+  const _getFreeResources = () =>
+    data == false ? null : data.free_resource[0].exam;
+
+  const renderUpcomingExams = ({item}) => (
+    <UpcomingExams name={item.exam_title} date={item.exam_date} />
+  );
 
   if (data == null) return null;
 
@@ -153,3 +150,63 @@ const styles = StyleSheet.create({
 });
 
 export default CoursesAndExams;
+
+/* <SectionList
+  ListHeaderComponent={() => <AppCarousel data={banner} />}
+  sections={[
+    { title: "Top Courses", data: data.courses },
+    { title: "Free Resources for you", data: data.freeResources },
+  ]}
+  renderSectionHeader={({ section }) => (
+    <>
+      <Text style={styles.heading}>{section.title}</Text>
+      <FlatList
+        data={section.data}
+        renderItem={renderRow}
+        keyExtractor={(item) => item.course_id || item.exam_id}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      />
+    </>
+  )}
+  renderItem={({ _ }) => <View></View>}
+  keyExtractor={(item) => item.course_id || item.exam_id}
+/> */
+
+// const renderRow = ({ item }) => {
+//   if (item.course_id)
+//     return (
+//       <TouchableHighlight
+//         underlayColor={defaultStyles.colors.light}
+//         onPress={() => navigation.push("CourseDetails", { courseId: item.course_id })}
+//       >
+//         <View style={[styles.card, defaultStyles.shadowLight]}>
+//           <Image
+//             style={styles.thumbnail}
+//             source={{ uri: item.course_img }}
+//             resizeMode="stretch"
+//           />
+//           <Text style={styles.title} numberOfLines={2}>
+//             {item.course_title}
+//           </Text>
+//         </View>
+//       </TouchableHighlight>
+//     );
+//   return (
+//     <View style={[styles.card, defaultStyles.shadowLight, styles.resourcesCard]}>
+//       <View style={styles.top}>
+//         <Image style={styles.icon} source={require("../assets/exam.png")} />
+//         <Text style={styles.type}>TEST</Text>
+//       </View>
+//       <Text style={styles.title} numberOfLines={2}>
+//         {item.exam_title}
+//       </Text>
+//       <Button
+//         btnStyle={styles.attempt}
+//         color="#44AF69"
+//         title="Attempt Now"
+//         onPress={() => navigation.navigate("TestInstruction")}
+//       />
+//     </View>
+//   );
+// };

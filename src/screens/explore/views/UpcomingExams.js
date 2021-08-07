@@ -3,15 +3,15 @@ import {StyleSheet, View} from 'react-native';
 import {Button, CustomText as Text} from '../../../components';
 import {colors} from '../../../config';
 
-const UpcomingExams = ({name, date}) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.examName} numberOfLines={2}>{name}</Text>
-      <Text style={styles.examDate}>{date}</Text>
-      <Button title="Explore Now" />
-    </View>
-  );
-};
+const UpcomingExams = ({name, date}) => (
+  <View style={styles.container}>
+    <Text style={styles.examName} numberOfLines={2}>
+      {name}
+    </Text>
+    <Text style={styles.examDate}>{date}</Text>
+    <Button title="Explore Now" />
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -25,27 +25,26 @@ const PaymentDetailsScreen = ({navigation, route: {params}}) => {
   const couponCode = useRef('');
 
   const applyCoupon = () => {
-    if (couponDiscount > 0) {
+    if (couponDiscount > 0 || couponCode.current == '') {
       setCouponDiscount(0);
       return;
     }
-    if (couponCode.current == '') {
-      setCouponDiscount(0);
-      return;
-    }
-    checkCoupon(couponCode.current, params.courseId).then(result => {
-      if (result.data.response == 100) {
-        const discountPercent = parseInt(result.data.discount_percent);
-        const courseFees = details.data.course_fees;
-        const discount = (courseFees * discountPercent) / 100;
-        setCouponDiscount(discount);
-        console.log(result.data.discount_percent);
-        showToast('Coupon Code applied');
-      } else {
-        setCouponDiscount(0);
-        showToast('Invalid Coupon Code');
-      }
-    });
+    checkCoupon(couponCode.current, params.courseId)
+      .then(result => {
+        if (result.data.response == 100) {
+          const discountPercent = parseInt(result.data.discount_percent);
+          const courseFees = details.data.course_fees;
+          const discount = (courseFees * discountPercent) / 100;
+          setCouponDiscount(discount);
+          showToast('Coupon Code applied');
+        } else {
+          setCouponDiscount(0);
+          showToast('Invalid Coupon Code');
+        }
+      })
+      .catch(error => {
+        showToast(`Error Occured while applying coupon code ${error}`);
+      });
   };
 
   const toIntamojoPayment = () =>
@@ -57,14 +56,11 @@ const PaymentDetailsScreen = ({navigation, route: {params}}) => {
   const getPrice = () => {
     const discount =
       (details.data.course_fees * details.data.discount_perc) / 100;
-    console.log('dis' + discount);
-    console.log('cd', couponDiscount);
     return details.data.course_fees - (discount + couponDiscount);
   };
 
-  const getDiscount = () => {
-    return (details.data.course_fees * details.data.discount_perc) / 100;
-  };
+  const getDiscount = () =>
+    (details.data.course_fees * details.data.discount_perc) / 100;
 
   if (!details) return null;
   return (

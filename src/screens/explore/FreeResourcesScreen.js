@@ -1,15 +1,13 @@
 import React from 'react';
+import {NavigationContext} from '@react-navigation/native';
 import {FlatList} from 'react-native';
 import {CustomText as Text, ScreenContainer, TopHeader} from '../../components';
-
 import FreeResources from './views/FreeResourcesH';
 
-const exams = ['Banking & Insurance', 'SSC', 'UPSC', 'MPSC', 'NET/SET', 'LAW'];
+const FreeResourcesScreen = ({route: {params}}) => {
+  const navigation = useContext(NavigationContext);
 
-const FreeResourcesScreen = ({route: {params}, navigation}) => {
-  const renderResources = ({item}) => (
-    <FreeResources navigation={navigation} item={item} />
-  );
+  const renderResources = ({item}) => <FreeResources item={item} />;
 
   return (
     <ScreenContainer>

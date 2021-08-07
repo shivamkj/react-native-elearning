@@ -1,7 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import TabNavigator from './TabNavigator';
-
 import CourseDetailsScreen from '../screens/courses/CourseDetails';
 import TestInstruction from '../screens/test/TestInstruction';
 import CourseStructureScreen from '../screens/courses/CourseStructure';
@@ -16,7 +15,6 @@ import EditNoteScreen from '../screens/notes/EditNote';
 import TestRecordScreen from '../screens/test/TestRecord';
 import PaymentHistoryScreen from '../screens/payments/PaymentHistory';
 import ChangePasswordScreen from '../screens/auth/ChangePassword';
-import FeedbackScreen from '../screens/more/Feedback';
 import CourseContentScreen from '../screens/courses/CourseContent';
 import TestOverviewScreen from '../screens/test/TestOverview';
 import PaymentDetailsScreen from '../screens/payments/PaymentDetails';
@@ -47,7 +45,6 @@ const AppNavigator = () => (
     <AppStack.Screen name="LiveStream" component={LiveStreamScreen} />
     <AppStack.Screen name="MyNotes" component={MyNotesScreen} />
     <AppStack.Screen name="RecordsByCourses" component={RecordsByCourses} />
-    <AppStack.Screen name="Feedback" component={FeedbackScreen} />
     <AppStack.Screen name="ChangePassword" component={ChangePasswordScreen} />
     <AppStack.Screen name="PaymentHistory" component={PaymentHistoryScreen} />
     <AppStack.Screen name="PaymentDetails" component={PaymentDetailsScreen} />

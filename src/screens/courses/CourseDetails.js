@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
-import {CustomText as Text, ScreenContainer, Button} from '../../components';
+import {CustomText as Text, ScreenContainer} from '../../components';
+import {useGlobalContext} from '../../utils/globalContext';
 import {getCourseDetails} from '../../api/visitors';
 import {defaultStyles} from '../../config';
 import ExtraDocuments from './views/ExtraDocuments';
@@ -10,7 +11,6 @@ import CourseSummary from './views/CourseSummary';
 import useFetch from '../../utils/useFetch';
 import CourseDetails from '../../ShimmerLayouts/CourseDetails';
 import {PurchaseBottomBar, StudyBottomBar} from './views/BottomBar';
-import {getPurchasedCourses} from '../../api/afterPurchase';
 
 const CourseDetailsScreen = ({navigation, route: {params}}) => {
   const [isPurchased, setPurchased] = useState(false);
@@ -19,15 +19,13 @@ const CourseDetailsScreen = ({navigation, route: {params}}) => {
     [],
     CourseDetails,
   );
+  const {paidCourses} = useGlobalContext();
 
   useEffect(() => {
-    getPurchasedCourses().then(result => {
-      if (result.data.response != 100) return;
-      const isPurchased = result.data.course.some(
-        course => course.course_id == params.courseId,
-      );
-      if (isPurchased) setPurchased(true);
-    });
+    const isPurchased = paidCourses.some(
+      course => course.course_id == params.courseId,
+    );
+    if (isPurchased == true) setPurchased(true);
   }, []);
 
   const toCourseStructure = () =>
@@ -35,7 +33,7 @@ const CourseDetailsScreen = ({navigation, route: {params}}) => {
       courseId: params.courseId,
     });
 
-  if (!courseDetails) return <View></View>;
+  if (!courseDetails) return <View />;
   return (
     <ScreenContainer>
       <ScrollView>
@@ -67,16 +65,14 @@ const CourseDetailsScreen = ({navigation, route: {params}}) => {
       <View style={[styles.bottomBar, defaultStyles.shadowDark]}>
         {isPurchased == false ? (
           <PurchaseBottomBar
-            actualFees={courseDetails.data.course_main_fees}
-            fees={courseDetails.data.course_fees}
+            fees={courseDetails.data.course_main_fees}
+            discountedFees={courseDetails.data.course_fees}
             courseId={params.courseId}
-            navigation={navigation}
           />
         ) : (
           <StudyBottomBar
             courseId={params.courseId}
             title={courseDetails.data.course_title}
-            navigation={navigation}
           />
         )}
       </View>

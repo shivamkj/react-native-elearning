@@ -1,9 +1,7 @@
 import React, {useCallback, memo, useRef, useState} from 'react';
 import {useEffect} from 'react';
-import {FlatList, View, Dimensions, StyleSheet, Image} from 'react-native';
+import {FlatList, View, StyleSheet, Image} from 'react-native';
 import {getBanner} from '../../../api/visitors';
-
-const WINDOW_WIDTH = Dimensions.get('window').width;
 
 const AppCarousel = () => {
   const [index, setIndex] = useState(0);

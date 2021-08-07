@@ -1,26 +1,31 @@
 import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {NavigationContext} from '@react-navigation/native';
+import {Image, StyleSheet} from 'react-native';
 import {CustomText as Text} from '../../../components';
 import {TouchableHighlights} from '../../../components';
-import {defaultStyles, colors} from '../../../config';
+import {colors} from '../../../config';
 
-const CoursesH = ({
-  item: {course_id, course_title, course_img},
-  navigation,
-}) => (
-  <TouchableHighlights
-    style={[styles.container]}
-    onPress={() => navigation.navigate('CourseDetails', {courseId: course_id})}>
-    <Image
-      style={styles.thumbnail}
-      source={{uri: course_img}}
-      resizeMode="stretch"
-    />
-    <Text style={styles.title} numberOfLines={2}>
-      {course_title}
-    </Text>
-  </TouchableHighlights>
-);
+// Courses Horizontal View
+const CoursesH = ({item: {course_id, course_title, course_img}}) => {
+  const navigation = React.useContext(NavigationContext);
+
+  return (
+    <TouchableHighlights
+      style={[styles.container]}
+      onPress={() =>
+        navigation.navigate('CourseDetails', {courseId: course_id})
+      }>
+      <Image
+        style={styles.thumbnail}
+        source={{uri: course_img}}
+        resizeMode="stretch"
+      />
+      <Text style={styles.title} numberOfLines={2}>
+        {course_title}
+      </Text>
+    </TouchableHighlights>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

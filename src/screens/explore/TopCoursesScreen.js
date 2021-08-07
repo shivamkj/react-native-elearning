@@ -19,9 +19,7 @@ const TopCoursesScreen = ({route: {params}, navigation}) => {
     return filteredCourses;
   };
 
-  const renderCourses = ({item}) => (
-    <Courses navigation={navigation} item={item} />
-  );
+  const renderCourses = ({item}) => <Courses item={item} />;
 
   return (
     <ScreenContainer>

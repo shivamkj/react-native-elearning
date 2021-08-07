@@ -12,7 +12,7 @@ const getCourseContent = (courseId, phaseId) =>
     params: {course_id: courseId, phase_id: phaseId},
   });
 
-const getFeed = () =>
+const getFeed = courseId =>
   client.get('after_purchase/feeds', {params: {course_id: courseId}});
 
 const getNews = courseId =>

@@ -12,12 +12,13 @@ import {setHeader} from './api/client';
 import {navigationRef} from './utils/notification';
 import {configureNotification} from './utils/notification';
 import Explore from './ShimmerLayouts/Explore';
+import {getPurchasedCourses} from './api/afterPurchase';
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const globalState = useMemo(
-    () => ({user: state.user, dispatch}),
-    [state.user],
+    () => ({dispatch, paidCourses: state.paidCourses}),
+    [state.paidCourses],
   );
   const [isStarting, setStarting] = useState(true);
 
@@ -28,6 +29,10 @@ const App = () => {
       if (authDetails == null) dispatch({type: 'auth', payload: false});
       else setHeader(authDetails.userId, authDetails.authToken);
       configureNotification();
+      const {data} = await getPurchasedCourses();
+      if (data.response == 100 && data.course.length >= 1) {
+        dispatch({type: 'paidCourses', payload: data.course});
+      }
     };
 
     init().finally(() => {
