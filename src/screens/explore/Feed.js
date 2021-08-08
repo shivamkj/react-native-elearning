@@ -3,11 +3,7 @@ import {useGlobalContext} from '../../utils/globalContext';
 import {StyleSheet, FlatList, View} from 'react-native';
 import {NavigationContext} from '@react-navigation/native';
 import {PdfCard, VideoCard, TestCard} from './views/Cards';
-import {
-  CustomText as Text,
-  LoadingIndicator,
-  ScreenContainer,
-} from '../../components';
+import {CustomText as Text, ScreenContainer} from '../../components';
 import {OptionsPicker, TouchableHighlights} from '../../components';
 import {ArrowDown} from '../../assets/icons';
 import {colors} from '../../config';
@@ -16,6 +12,7 @@ import {getFeed} from '../../api/afterPurchase';
 import {getCourses} from '../../api/visitors';
 import useFetch from '../../utils/useFetch';
 import Courses from './views/Courses';
+import Explore from '../../ShimmerLayouts/Explore';
 
 const Feed = () => {
   const {paidCourses} = useGlobalContext();
@@ -42,7 +39,6 @@ const Feed = () => {
   const onCourseSelect = courseIndex => setCourseSelected(courseIndex);
 
   const renderItem = ({item}) => {
-    console.log(item.type);
     switch (item.type) {
       case '0':
         return <PdfCard data={item} navigation={navigation} />;
@@ -55,7 +51,7 @@ const Feed = () => {
     }
   };
 
-  if (courseFeed == null) return <LoadingIndicator />;
+  if (courseFeed == null || data == null) return <Explore />;
   return (
     <ScreenContainer style={{backgroundColor: colors.light}}>
       <TouchableHighlights

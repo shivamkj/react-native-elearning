@@ -15,25 +15,13 @@ const getCourseContent = (courseId, phaseId) =>
 const getFeed = courseId =>
   client.get('after_purchase/feeds', {params: {course_id: courseId}});
 
-const getNews = courseId =>
-  client.get('news/get_news', {params: {course_id: courseId}});
-
-const filterNews = filterType =>
-  client.get('news/filter_news', {request: filterType});
-
-const getTestAnalysis = () => client.get('news/get_test_analysis');
-
-const filterTestAnalysis = filterType =>
-  client.get('news/filter_analysis_report', {params: {request: filterType}});
+const getNotifications = () => client.get('notification/get_notification');
 
 export {
   getMyCourses as getPaidCourses,
   getPurchasedCourses,
   getPhases,
   getCourseContent,
-  getNews,
   getFeed,
-  filterNews,
-  getTestAnalysis,
-  filterTestAnalysis,
+  getNotifications,
 };

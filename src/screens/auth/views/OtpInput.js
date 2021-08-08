@@ -13,6 +13,7 @@ const OtpInput = ({onVerificationSuccess, email, userId}) => {
   const [timeLeft, setTimeLeft] = useState(TIME_LIMIT);
   const otpResent = useRef(0);
   const otp = useRef([]);
+  const timeout = useRef();
 
   // useEffect(() => {
   //   genrateOtp(email).then((result) => {
@@ -37,6 +38,7 @@ const OtpInput = ({onVerificationSuccess, email, userId}) => {
       if (result.data.response == 100) {
         setError(null);
         onVerificationSuccess();
+        clearInterval(timeout.current);
       } else setError('Wrong OTP entered!');
     });
   };
@@ -48,7 +50,7 @@ const OtpInput = ({onVerificationSuccess, email, userId}) => {
   };
 
   useEffect(() => {
-    const timeout = setInterval(() => {
+    timeout.current = setInterval(() => {
       setTimeLeft(prevTime => {
         if (prevTime == 0) {
           clearInterval(timeout);
@@ -57,7 +59,7 @@ const OtpInput = ({onVerificationSuccess, email, userId}) => {
         return prevTime - 1;
       });
     }, 1000);
-    return () => clearInterval(timeout);
+    return () => clearInterval(timeout.current);
   }, [timeLeft]);
 
   const resendOtp = () => {

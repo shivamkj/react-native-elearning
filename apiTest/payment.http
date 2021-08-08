@@ -1,10 +1,10 @@
-@paymentToken = UjZ2YKSIt03mi3NcfgvIPoTGXVYmdl
+@paymentToken = yCd2rC37GQRQ6VQCwJyk715NK9nHW8
 ###
 GET  {{baseUrl}}payment/create_access_token
 Access-Token: {{accessToken}}
 User-id: {{userId}}
 ###
-GET {{baseUrl}}payment/payment_request?access_token={{paymentToken}}&userid={{userId}}&course_id=11&coupon=TARGET10
+GET {{baseUrl}}payment/payment_request?access_token={{paymentToken}}&userid={{userId}}&course_id=35&coupon=TARGET10
 Access-Token: {{accessToken}}
 User-id: {{userId}}
 ###
