@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, View, StyleSheet, Linking, Alert} from 'react-native';
+import {FlatList, View, StyleSheet, Linking, Alert, Share} from 'react-native';
 import {ArrowRight} from '../../assets/icons';
 import {Notes, Password, Payment, Logout} from '../../assets/more';
 import {Support, TestRecord} from '../../assets/more';
@@ -15,6 +15,9 @@ import {showToast} from '../../utils/functions';
 import {useGlobalContext} from '../../utils/globalContext';
 import ProfileSection from './views/ProfileSection';
 
+const APP_LINK = ' https://play.google.com/store/apps/details?id=in.edua.app';
+const SHARE_MESSAGE = `Download Edua App Now. \nLink: ${APP_LINK}`;
+
 const MoreScreen = ({navigation}) => {
   const [options, setOptions] = useState(null);
   const {dispatch} = useGlobalContext();
@@ -29,7 +32,13 @@ const MoreScreen = ({navigation}) => {
 
   const handleClick = title => {
     if (title == 'Logout') askLogout();
-    else if (title == 'Privacy') showPrivacyPolicy();
+    else if (title == 'Privacy') {
+      Linking.openURL('https://edua.in/privacy_policy.php').catch(err =>
+        showToast('Sorry, Could not load page'),
+      );
+    } else if (title == 'Share App') {
+      Share.share({message: SHARE_MESSAGE, url: APP_LINK});
+    }
   };
 
   const askLogout = () => {
@@ -71,12 +80,6 @@ const MoreScreen = ({navigation}) => {
   );
 };
 
-const showPrivacyPolicy = () => {
-  Linking.openURL('https://edua.in/privacy_policy.php').catch(err =>
-    showToast('Sorry, Could not load page'),
-  );
-};
-
 const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
@@ -102,6 +105,7 @@ const OPTIONS = [
   {title: 'Help & Support', icon: Support, screen: 'HelpAndSupport'},
   {title: 'Logout', icon: Logout, screen: ''},
   {title: 'Privacy', icon: Support, screen: ''},
+  {title: 'Share App', icon: Support, screen: ''},
 ];
 
 const WITHOUT_SINGIN = [
@@ -110,6 +114,7 @@ const WITHOUT_SINGIN = [
   {title: 'Payment History', icon: Payment, screen: 'PaymentHistory'},
   {title: 'Help & Support', icon: Support, screen: 'HelpAndSupport'},
   {title: 'Privacy', icon: Support, screen: ''},
+  {title: 'Share App', icon: Support, screen: ''},
 ];
 
 export default MoreScreen;

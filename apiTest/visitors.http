@@ -1,5 +1,5 @@
 ###
-GET {{baseUrl}}visitor/get_popular_courses_and_free_resourses?exam_type_id=
+GET {{baseUrl}}visitor/get_popular_courses_and_free_resourses?exam_type_id=0
 ###
 GET {{baseUrl}}visitor/get_course_details?course_id=18
 # Access-Token: {{accessToken}}
