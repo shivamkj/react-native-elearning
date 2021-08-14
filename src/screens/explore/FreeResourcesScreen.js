@@ -5,7 +5,7 @@ import {CustomText as Text, ScreenContainer, TopHeader} from '../../components';
 import FreeResources from './views/FreeResourcesH';
 
 const FreeResourcesScreen = ({route: {params}}) => {
-  const navigation = useContext(NavigationContext);
+  const navigation = React.useContext(NavigationContext);
 
   const renderResources = ({item}) => <FreeResources item={item} />;
 

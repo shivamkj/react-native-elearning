@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {NavigationContext} from '@react-navigation/native';
+import {View, StyleSheet} from 'react-native';
 import {CustomText as Text, Button} from '../../../components';
 import {defaultStyles, colors} from '../../../config';
 import {MockTest} from '../../../assets/icons';

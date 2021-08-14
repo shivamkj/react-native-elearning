@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, FlatList, ScrollView, View} from 'react-native';
 import {NavigationContext} from '@react-navigation/native';
-import {getCourses} from '../../api/visitors';
+import {getCourses, getExamTypes} from '../../api/visitors';
 import useFetch from '../../utils/useFetch';
 import Explore from '../../ShimmerLayouts/Explore';
 import {CustomText as Text, ScreenContainer} from '../../components';
@@ -13,13 +13,33 @@ import AppCarousel from './views/Carousel';
 import Courses from './views/Courses';
 import UpcomingExams from './views/UpcomingExams';
 
-const exams = ['Banking & Insurance', 'SSC', 'UPSC', 'MPSC', 'NET/SET', 'LAW'];
-
 const CoursesAndExams = () => {
-  const [courseType, setCourseType] = useState(0);
+  const [examTypes, setExamTypes] = useState(null);
+  const [typeNames, setTypeNames] = useState(null);
+  const [selectedType, setSelectedType] = useState(0);
   const [pickerVisible, setPickerVisible] = useState(false);
-  const data = useFetch(getCourses(courseType), [courseType], Explore);
+  const data = useFetch(
+    getCourses(
+      examTypes == null ? 0 : examTypes[selectedType - 1]?.type_id || 0,
+    ),
+    [selectedType],
+    Explore,
+  );
   const navigation = React.useContext(NavigationContext);
+
+  useEffect(() => {
+    getExamTypes().then(result => {
+      if (result.data.response == 100) {
+        const names = [];
+        names.push('All Exams');
+        result.data.data.forEach(examType => {
+          names.push(examType.exam_type_name);
+        });
+        setTypeNames(names);
+        setExamTypes(result.data.data);
+      }
+    });
+  }, []);
 
   const renderCourses = ({item}) => <Courses item={item} />;
   const renderResources = ({item}) => <FreeResources item={item} />;
@@ -31,16 +51,14 @@ const CoursesAndExams = () => {
     <UpcomingExams name={item.exam_title} date={item.exam_date} />
   );
 
-  if (data == null) return null;
+  if (data == null || examTypes == null) return null;
 
   return (
     <ScreenContainer style={{backgroundColor: colors.light}}>
       <TouchableHighlights
         style={styles.topBar}
         onPress={() => setPickerVisible(true)}>
-        <Text style={styles.courseType}>
-          {courseType == 0 ? 'All Exams' : exams[courseType - 6]}
-        </Text>
+        <Text style={styles.courseType}>{typeNames[selectedType]}</Text>
         <ArrowDown />
       </TouchableHighlights>
       <ScrollView>
@@ -98,8 +116,8 @@ const CoursesAndExams = () => {
       <OptionsPicker
         visible={pickerVisible}
         setVisible={setPickerVisible}
-        options={exams}
-        setSlectedOption={v => setCourseType(v + 6)}
+        options={typeNames}
+        setSlectedOption={setSelectedType}
         style={{top: 50, left: 0, width: 160}}
       />
     </ScreenContainer>
