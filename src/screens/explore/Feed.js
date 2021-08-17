@@ -52,6 +52,7 @@ const Feed = () => {
   };
 
   if (courseFeed == null || data == null) return <Explore />;
+
   return (
     <ScreenContainer style={{backgroundColor: colors.light}}>
       <TouchableHighlights

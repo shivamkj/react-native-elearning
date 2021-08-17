@@ -19,7 +19,7 @@ const HelpAndSupport = ({navigation}) => {
         <View style={[defaultStyles.border, {marginVertical: 20}]} />
         <View style={styles.info}>
           <Phone />
-          <Text style={styles.infoText}>{supportDetails.mobile}</Text>
+          <Text style={styles.infoText}>{supportDetails.mobile_new.join(', ')}</Text>
         </View>
         <View style={styles.info}>
           <Email />

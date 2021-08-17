@@ -15,7 +15,7 @@ const FreeResourcesScreen = ({route: {params}}) => {
       <FlatList
         data={params.resources}
         renderItem={renderResources}
-        keyExtractor={item => item.exam_id}
+        keyExtractor={item => item.id}
         showsHorizontalScrollIndicator={false}
         ListEmptyComponent={<Text>No free Resources Found</Text>}
       />

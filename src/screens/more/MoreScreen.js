@@ -16,7 +16,11 @@ import {useGlobalContext} from '../../utils/globalContext';
 import ProfileSection from './views/ProfileSection';
 
 const APP_LINK = ' https://play.google.com/store/apps/details?id=in.edua.app';
-const SHARE_MESSAGE = `Download Edua App Now. \nLink: ${APP_LINK}`;
+const SHARE_MESSAGE = `Let's learn with Edua! 
+It's excellent E-learning  platform for all competitive exams.
+Edua online course consist of videos, study notes, live classes, practice tests and expert counseling.
+Connect us at
+Link: ${APP_LINK}`;
 
 const MoreScreen = ({navigation}) => {
   const [options, setOptions] = useState(null);
@@ -33,7 +37,7 @@ const MoreScreen = ({navigation}) => {
   const handleClick = title => {
     if (title == 'Logout') askLogout();
     else if (title == 'Privacy') {
-      Linking.openURL('https://edua.in/privacy_policy.php').catch(err =>
+      Linking.openURL('https://edua.in/home/privacy').catch(err =>
         showToast('Sorry, Could not load page'),
       );
     } else if (title == 'Share App') {

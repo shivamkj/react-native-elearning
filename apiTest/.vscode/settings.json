@@ -1,8 +1,8 @@
 {
   "rest-client.environmentVariables": {
     "$shared": {
-      "baseUrl": "https://staging.edua.in/app/",
-      // "baseUrl": "https://edua.in/app/",
+      // "baseUrl": "https://staging.edua.in/app/",
+      "baseUrl": "https://edua.in/app/",
       "accessToken": "e86abf6f0dd20ba811e84f9ec4cb50aaaf8e7e6b4b77933ae0db1c277a84ef3a",
       "userId": "7566"
     }

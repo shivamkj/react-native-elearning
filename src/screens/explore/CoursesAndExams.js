@@ -11,7 +11,7 @@ import {colors} from '../../config';
 import FreeResources from './views/FreeResources';
 import AppCarousel from './views/Carousel';
 import Courses from './views/Courses';
-import UpcomingExams from './views/UpcomingExams';
+import UpcomingCourses from './views/UpcomingCourses';
 
 const CoursesAndExams = () => {
   const [examTypes, setExamTypes] = useState(null);
@@ -43,16 +43,16 @@ const CoursesAndExams = () => {
 
   const renderCourses = ({item}) => <Courses item={item} />;
   const renderResources = ({item}) => <FreeResources item={item} />;
+  const renderUpcomingCourses = ({item}) => <UpcomingCourses item={item} />;
 
-  const _getFreeResources = () =>
-    data == false ? null : data.free_resource[0].exam;
-
-  const renderUpcomingExams = ({item}) => (
-    <UpcomingExams name={item.exam_title} date={item.exam_date} />
-  );
+  const toFreeResources = () =>
+    navigation.navigate('FreeResources', {
+      resources: data.free_resource_new,
+    });
+  const toCourses = () =>
+    navigation.navigate('TopCourses', {courses: data.top_courses});
 
   if (data == null || examTypes == null) return null;
-
   return (
     <ScreenContainer style={{backgroundColor: colors.light}}>
       <TouchableHighlights
@@ -65,11 +65,7 @@ const CoursesAndExams = () => {
         <AppCarousel />
         <View style={styles.topHeading}>
           <Text style={styles.heading}>Top Courses</Text>
-          <Text
-            style={styles.viewMore}
-            onPress={() =>
-              navigation.navigate('TopCourses', {courses: data.top_courses})
-            }>
+          <Text style={styles.viewMore} onPress={toCourses}>
             View More
           </Text>
         </View>
@@ -83,35 +79,31 @@ const CoursesAndExams = () => {
         />
         <View style={styles.topHeading}>
           <Text style={styles.heading}>Free Resources for you</Text>
-          <Text
-            style={styles.viewMore}
-            onPress={() =>
-              navigation.navigate('FreeResources', {
-                resources: _getFreeResources(),
-              })
-            }>
+          <Text style={styles.viewMore} onPress={toFreeResources}>
             View More
           </Text>
         </View>
         <FlatList
-          data={_getFreeResources()}
+          data={data.free_resource_new}
           renderItem={renderResources}
           keyExtractor={item => item.exam_id}
           horizontal
           showsHorizontalScrollIndicator={false}
           ListEmptyComponent={<Text>No free Resources Found</Text>}
         />
-        <View style={styles.upcomingExam}>
-          <Text style={styles.examsHeading}>Upcoming Exams</Text>
-          <FlatList
-            data={data.upcoming_exams}
-            renderItem={renderUpcomingExams}
-            keyExtractor={item => item.exam_id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            ListEmptyComponent={<Text>No Upcoming Exams</Text>}
-          />
-        </View>
+        {data.upcoming_courses.length > 0 ? (
+          <View style={styles.upcomingExam}>
+            <Text style={styles.examsHeading}>Upcoming Courses</Text>
+            <FlatList
+              data={data.upcoming_courses}
+              renderItem={renderUpcomingCourses}
+              keyExtractor={item => item.course_id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              ListEmptyComponent={<Text>No Upcoming Courses</Text>}
+            />
+          </View>
+        ) : null}
       </ScrollView>
       <OptionsPicker
         visible={pickerVisible}

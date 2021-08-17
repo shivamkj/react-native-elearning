@@ -1,35 +1,44 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import {NavigationContext} from '@react-navigation/native';
 import {CustomText as Text, Button} from '../../../components';
 import {defaultStyles, colors} from '../../../config';
-import {MockTest} from '../../../assets/icons';
+import {navigate} from '../../../utils/functions';
 
 const FreeResources = ({item}) => {
   const navigation = React.useContext(NavigationContext);
 
-  const toExamInstruction = () =>
-    navigation.navigate('TestInstruction', {
-      name: item.exam_title,
-      maxMark: item.total_marks,
-      questions: item.total_qtn,
-      time: item.exam_duration,
-      examId: item.exam_id,
-      eid: item.eid,
-    });
+  const [type, action] = getAttributes(item.type);
 
   return (
     <View style={[styles.container, defaultStyles.shadowLight]}>
       <View style={styles.topContainer}>
-        <MockTest size={30} />
-        <Text style={styles.type}>TEST</Text>
+        <Image style={styles.img} source={{uri: item.placeholder_img}} />
+        <Text style={styles.type}>{type}</Text>
       </View>
       <Text style={styles.title} numberOfLines={2}>
-        {item.exam_title}
+        {item.title}
       </Text>
-      <Button color="#44AF69" title="Attempt Now" onPress={toExamInstruction} />
+      <Button
+        color="#44AF69"
+        title={action}
+        onPress={() => navigate(item, navigation)}
+      />
     </View>
   );
+};
+
+const getAttributes = type => {
+  switch (type) {
+    case '0':
+      return ['NEWS', 'READ NOW'];
+    case '1':
+      return ['VIDEO', 'WATCH NOW'];
+    case '2':
+      return ['MOCK TEST', 'ATTEMPT NOW'];
+    default:
+      throw Error(`No type found for the type ${type}`);
+  }
 };
 
 const styles = StyleSheet.create({
@@ -57,6 +66,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 16,
     opacity: 0.4,
+  },
+  img: {
+    width: 30,
+    height: 30,
   },
 });
 

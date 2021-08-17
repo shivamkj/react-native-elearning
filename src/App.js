@@ -11,7 +11,6 @@ import {getAuthDetails} from './utils/authStorage';
 import {setHeader} from './api/client';
 import {navigationRef} from './utils/notification';
 import {configureNotification} from './utils/notification';
-import Explore from './ShimmerLayouts/Explore';
 import {getPurchasedCourses} from './api/afterPurchase';
 
 const App = () => {

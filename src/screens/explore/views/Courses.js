@@ -1,8 +1,7 @@
 import React from 'react';
 import {NavigationContext} from '@react-navigation/native';
 import {Image, StyleSheet} from 'react-native';
-import {CustomText as Text} from '../../../components';
-import {TouchableHighlights} from '../../../components';
+import {CustomText as Text, TouchableHighlights} from '../../../components';
 import {defaultStyles, colors} from '../../../config';
 
 const Courses = ({item: {course_id, course_title, course_img}}) => {
