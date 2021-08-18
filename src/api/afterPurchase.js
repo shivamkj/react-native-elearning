@@ -1,6 +1,6 @@
-import {delay} from '../utils/functions';
 import client from './client';
-import notificationData from './mockData/notification';
+// import {delay} from '../utils/functions';
+// import notificationData from './mockData/notification';
 
 const getMyCourses = () => client.get('course/get_paid_course');
 
@@ -17,8 +17,8 @@ const getCourseContent = (courseId, phaseId) =>
 const getFeed = courseId =>
   client.get('after_purchase/feeds', {params: {course_id: courseId}});
 
-// const getNotifications = () => client.get('notification/get_notification');
-const getNotifications = async () => delay(2).then(() => notificationData);
+const getNotifications = () => client.get('notification/get_notification');
+// const getNotifications = async () => delay(2).then(() => notificationData);
 
 export {
   getMyCourses as getPaidCourses,

@@ -41,7 +41,6 @@ const EmailAuthScreen = ({navigation}) => {
     checkEmail(email.current)
       .then(result => {
         dispatch({type: 'loading', payload: false});
-        console.log(result.data);
         if (result.data.response == 100)
           navigation.navigate('Login', {
             email: result.data.email,

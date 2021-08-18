@@ -19,12 +19,12 @@ const navigate = (item, navigation) => {
       break;
     case '2':
       navigation.navigate('TestInstruction', {
-        name: item.exam_title,
-        maxMark: item.total_marks,
-        questions: item.total_qtn,
-        time: item.exam_duration,
-        examId: item.exam_id,
-        eid: item.eid,
+        name: item.title,
+        maxMark: item.exam_info.total_marks,
+        questions: item.exam_info.total_qtn,
+        time: item.exam_info.exam_duration,
+        examId: item.id,
+        eid: item.exam_info.eid,
       });
       break;
     default:

@@ -30,7 +30,6 @@ const RegisterationScreen = ({navigation}) => {
     try {
       dispatch({type: 'loading', payload: LoadingIndicator});
       const {data} = await checkEmail(email.current, mobile.current);
-      console.log(data);
       if (data.response == 206) {
         dispatch({type: 'loading', payload: false});
         navigation.navigate('AddDetails', {

@@ -49,7 +49,7 @@ const CoursesAndExams = () => {
     navigation.navigate('FreeResources', {
       resources: data.free_resource_new,
     });
-  const toCourses = () =>
+  const toTopCourses = () =>
     navigation.navigate('TopCourses', {courses: data.top_courses});
 
   if (data == null || examTypes == null) return null;
@@ -65,7 +65,7 @@ const CoursesAndExams = () => {
         <AppCarousel />
         <View style={styles.topHeading}>
           <Text style={styles.heading}>Top Courses</Text>
-          <Text style={styles.viewMore} onPress={toCourses}>
+          <Text style={styles.viewMore} onPress={toTopCourses}>
             View More
           </Text>
         </View>

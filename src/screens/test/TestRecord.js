@@ -7,8 +7,10 @@ import {
   Touchable,
 } from '../../components';
 import {MockTest} from '../../assets/icons';
+import EmptyState from '../../components/EmptyState';
 
 const TestRecordScreen = ({navigation, route: {params}}) => {
+
   const toTestResult = (examId, eid) =>
     navigation.navigate('TestResult', {examId, eid});
 
@@ -23,6 +25,9 @@ const TestRecordScreen = ({navigation, route: {params}}) => {
             onPress={() => toTestResult(item.exam_id, item.eid)}
           />
         )}
+        ListEmptyComponent={
+          <EmptyState title="No Test Record Found" center={true} />
+        }
         keyExtractor={(_, index) => index.toString()}
         style={{marginHorizontal: 16}}
         showsVerticalScrollIndicator={false}
@@ -101,48 +106,5 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
 });
-
-const data = [
-  {
-    title: 'Saturday September 3, 2019',
-    examName: 'ad nostrud in voluptate culpa magna',
-    percentile: 92.99,
-  },
-  {
-    title: 'Saturday September 3, 2019',
-    examName: 'voluptate aliqua amet id duis ullamco',
-    percentile: 70.22,
-  },
-  {
-    title: 'Wednesday September 10, 2019',
-    examName: 'deserunt velit laborum dolore veniam ex',
-    percentile: 83.46,
-  },
-  {
-    title: 'Wednesday September 10, 2019',
-    examName: 'non Lorem et Lorem esse et',
-    percentile: 67.2,
-  },
-  {
-    title: 'Saturday September 3, 2019',
-    examName: 'dolor consectetur anim cillum non adipisicing',
-    percentile: 92.99,
-  },
-  {
-    title: 'Saturday September 3, 2019',
-    examName: 'pariatur elit do adipisicing eiusmod officia',
-    percentile: 70.22,
-  },
-  {
-    title: 'Wednesday September 10, 2019',
-    examName: 'nisi anim proident duis non deserunt',
-    percentile: 83.46,
-  },
-  {
-    title: 'Wednesday September 10, 2019',
-    examName: 'ipsum qui do id cupidatat proident',
-    percentile: 67.2,
-  },
-];
 
 export default TestRecordScreen;

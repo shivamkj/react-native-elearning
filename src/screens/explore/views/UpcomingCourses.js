@@ -1,20 +1,29 @@
 import React from 'react';
+import {NavigationContext} from '@react-navigation/native';
 import {Image, View, StyleSheet} from 'react-native';
-import {CustomText as Text} from '../../../components';
+import {CustomText as Text, Touchable} from '../../../components';
 import {defaultStyles} from '../../../config';
 
-const UpcomingCourses = ({item}) => (
-  <View style={[styles.container, defaultStyles.shadowLight]}>
-    <Image
-      style={styles.thumbnail}
-      source={{uri: item.course_img}}
-      resizeMode="stretch"
-    />
-    <Text style={styles.title} numberOfLines={2}>
-      {item.course_title}
-    </Text>
-  </View>
-);
+const UpcomingCourses = ({item}) => {
+  const navigation = React.useContext(NavigationContext);
+
+  return (
+    <Touchable
+      style={[styles.container, defaultStyles.shadowLight]}
+      onPress={() =>
+        navigation.navigate('CourseDetails', {courseId: item.course_id})
+      }>
+      <Image
+        style={styles.thumbnail}
+        source={{uri: item.course_img}}
+        resizeMode="stretch"
+      />
+      <Text style={styles.title} numberOfLines={2}>
+        {item.course_title}
+      </Text>
+    </Touchable>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

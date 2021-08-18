@@ -12,6 +12,7 @@ import {getFeed} from '../../api/afterPurchase';
 import {getCourses} from '../../api/visitors';
 import useFetch from '../../utils/useFetch';
 import Courses from './views/Courses';
+import FreeResources from './views/FreeResources';
 import Explore from '../../ShimmerLayouts/Explore';
 
 const Feed = () => {
@@ -22,10 +23,6 @@ const Feed = () => {
   const navigation = React.useContext(NavigationContext);
 
   const data = useFetch(getCourses());
-
-  const renderCourses = ({item}) => <Courses item={item} />;
-
-  const coursesTitles = () => paidCourses.map(course => course.course_title);
 
   useEffect(() => {
     const courseId = paidCourses[courseSelected].course_id;
@@ -51,8 +48,19 @@ const Feed = () => {
     }
   };
 
-  if (courseFeed == null || data == null) return <Explore />;
+  const coursesTitles = () => paidCourses.map(course => course.course_title);
 
+  const renderCourses = ({item}) => <Courses item={item} />;
+  const renderResources = ({item}) => <FreeResources item={item} />;
+
+  const toFreeResources = () =>
+    navigation.navigate('FreeResources', {
+      resources: data.free_resource_new,
+    });
+  const toTopCourses = () =>
+    navigation.navigate('TopCourses', {courses: data.top_courses});
+
+  if (courseFeed == null || data == null) return <Explore />;
   return (
     <ScreenContainer style={{backgroundColor: colors.light}}>
       <TouchableHighlights
@@ -69,11 +77,7 @@ const Feed = () => {
             <AppCarousel />
             <View style={styles.topHeading}>
               <Text style={styles.heading}>Top Courses</Text>
-              <Text
-                style={styles.viewMore}
-                onPress={() =>
-                  navigation.navigate('TopCourses', {courses: data.top_courses})
-                }>
+              <Text style={styles.viewMore} onPress={toTopCourses}>
                 View More
               </Text>
             </View>
@@ -85,6 +89,21 @@ const Feed = () => {
               showsHorizontalScrollIndicator={false}
               ListEmptyComponent={<Text>No courses found</Text>}
             />
+            <View style={styles.topHeading}>
+              <Text style={styles.heading}>Free Resources for you</Text>
+              <Text style={styles.viewMore} onPress={toFreeResources}>
+                View More
+              </Text>
+            </View>
+            <FlatList
+              data={data.free_resource_new}
+              renderItem={renderResources}
+              keyExtractor={item => item.exam_id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              ListEmptyComponent={<Text>No free Resources Found</Text>}
+            />
+            <Text style={styles.feedHeading}>Courses Feed</Text>
           </>
         }
         data={courseFeed}
@@ -129,6 +148,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Bold-700',
     fontSize: 14,
     color: colors.primaryGreen,
+  },
+  feedHeading: {
+    fontSize: 20,
+    fontFamily: 'Bold-700',
+    margin: 16,
   },
 });
 

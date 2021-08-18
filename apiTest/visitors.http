@@ -24,6 +24,8 @@ User-id: {{userId}}
 GET {{baseUrl}}/pre_purchase/get_exam_types
 Access-Token: {{accessToken}}
 User-id: {{userId}}
+###
+GET {{baseUrl}}home/get_support_help
 # {
 #     "course_id": "13",
 #     "course_title": "NABARD Grade A ARD Special Module Phase I and Phase II",

@@ -15,11 +15,17 @@ const HelpAndSupport = ({navigation}) => {
     <ScreenContainer>
       <TopHeader title="Help & Support" onBackPress={navigation.goBack} />
       <View style={styles.container}>
-        <Text style={styles.detail}>{supportDetails.message}</Text>
+        <Text style={styles.detailBold}>{supportDetails.message_new[0]}</Text>
+        {supportDetails.message_new.map((message, index) => {
+          if (index == 0) return;
+          return <Text style={styles.detail}>{message}</Text>;
+        })}
         <View style={[defaultStyles.border, {marginVertical: 20}]} />
         <View style={styles.info}>
           <Phone />
-          <Text style={styles.infoText}>{supportDetails.mobile_new.join(', ')}</Text>
+          <Text style={styles.infoText}>
+            {supportDetails.mobile_new.join(', ')}
+          </Text>
         </View>
         <View style={styles.info}>
           <Email />
@@ -37,6 +43,10 @@ const styles = StyleSheet.create({
   detail: {
     fontSize: 18,
     color: '#00000080',
+  },
+  detailBold: {
+    fontSize: 18,
+    fontFamily: 'SemiBold-600',
   },
   info: {
     flexDirection: 'row',
