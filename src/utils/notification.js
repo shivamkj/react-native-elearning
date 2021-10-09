@@ -1,13 +1,7 @@
-import {createRef} from 'react';
 import messaging from '@react-native-firebase/messaging';
 import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
-
-export const navigationRef = createRef();
-
-export function navigate(name, params) {
-  navigationRef.current?.navigate(name, params);
-}
+import * as RootNavigation from './rootNavigator';
 
 const configureNotification = () => {
   messaging().onMessage(async remoteMessage => {
@@ -76,19 +70,26 @@ const setLocalNotification = (title, message, data) =>
 // };
 
 const openResourceScreen = ({type, ...info}) => {
+  console.log('openResourceScreen');
   switch (parseInt(type)) {
     case 0:
-      navigate('PdfViewer', info);
+      RootNavigation.navigate('PdfViewer', info);
+      console.log('PdfViewer');
       break;
     case 1:
-      navigate('VideoPlayer', info);
+      RootNavigation.navigate('VideoPlayer', info);
+      console.log('VideoPlayer');
       break;
     case 2:
-      navigate('TestInstruction', info);
+      RootNavigation.navigate('TestInstruction', info);
+      console.log('TestInstruction');
       break;
     case 3:
-      navigate('LiveStream', info);
+      RootNavigation.navigate('LiveStream', info);
+      console.log('LiveStream');
       break;
+    default:
+      console.log('default');
   }
 };
 

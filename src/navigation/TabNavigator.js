@@ -19,10 +19,13 @@ const TabStack = createBottomTabNavigator();
 const TabNavigator = () => (
   <TabStack.Navigator
     initialRouteName="ExploreStack"
-    headerMode="none"
-    tabBarOptions={{
-      labelStyle: {fontSize: 11, fontFamily: 'SemiBold-600'},
-      style: {
+    screenOptions={{
+      headerShown: false,
+      tabBarLabelStyle: {
+        fontSize: 11,
+        fontFamily: 'SemiBold-600',
+      },
+      tabBarStyle: {
         height: 51,
         paddingBottom: 6,
       },
@@ -46,7 +49,7 @@ const TabNavigator = () => (
           focused ? <ExploreSelected /> : <ExploreUnselected />,
       }}
       listeners={({navigation, _}) => ({
-        tabPress: (e) => {
+        tabPress: e => {
           e.preventDefault();
           if (navigation.canGoBack()) {
             navigation.reset({

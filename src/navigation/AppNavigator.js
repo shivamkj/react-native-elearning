@@ -34,7 +34,7 @@ import FreeResourcesScreen from '../screens/explore/FreeResourcesScreen';
 const AppStack = createStackNavigator();
 
 const AppNavigator = () => (
-  <AppStack.Navigator headerMode="none">
+  <AppStack.Navigator screenOptions={{headerShown: false}}>
     <AppStack.Screen name="Home" component={TabNavigator} />
     <AppStack.Screen name="TopCourses" component={TopCoursesScreen} />
     <AppStack.Screen name="FreeResources" component={FreeResourcesScreen} />

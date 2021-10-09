@@ -1,6 +1,7 @@
-import { getPurchasedCourses } from '../api/afterPurchase';
+import {getPurchasedCourses} from '../api/afterPurchase';
 import {removeHeader, setHeader} from '../api/client';
 import {removeUser, storeAuthDetails, storeUserDetails} from './authStorage';
+import messaging from '@react-native-firebase/messaging';
 
 const logoutUser = async dispatch => {
   await removeHeader();
@@ -15,7 +16,13 @@ const loginUser = async (userId, accessToken, fullName, email, dispatch) => {
   await storeAuthDetails(userId, accessToken);
   const {data} = await getPurchasedCourses();
   if (data.response == 100 && data.course.length >= 1) {
-    dispatch({type: 'paidCourses', payload: data.course});
+    const courses = data.course;
+    dispatch({type: 'paidCourses', payload: courses});
+    for (var i = 0; i < courses.length; i++) {
+      await messaging().subscribeToTopic(`course_id_${courses[i].course_id}`);
+    }
+
+    await messaging().subscribeToTopic('example');
   }
   await dispatch({type: 'auth', payload: true});
 };

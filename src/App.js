@@ -9,9 +9,9 @@ import OfflineIndicator from './components/OfflineIndicator';
 import SplashScreen from 'react-native-splash-screen';
 import {getAuthDetails} from './utils/authStorage';
 import {setHeader} from './api/client';
-import {navigationRef} from './utils/notification';
 import {configureNotification} from './utils/notification';
 import {getPurchasedCourses} from './api/afterPurchase';
+import {navigationRef} from './utils/rootNavigator';
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -27,7 +27,6 @@ const App = () => {
       const authDetails = await getAuthDetails();
       if (authDetails == null) dispatch({type: 'auth', payload: false});
       else setHeader(authDetails.userId, authDetails.authToken);
-      configureNotification();
       const {data} = await getPurchasedCourses();
       if (data.response == 100 && data.course.length >= 1) {
         dispatch({type: 'paidCourses', payload: data.course});
@@ -39,6 +38,10 @@ const App = () => {
       setStarting(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (isStarting == false) configureNotification();
+  }, [isStarting]);
 
   const showAlert = () =>
     Alert.alert('Error', JSON.stringify(state.error), [

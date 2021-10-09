@@ -10,7 +10,7 @@ import AddDetailsScreen from '../screens/auth/AddDetails';
 const RootStack = createStackNavigator();
 
 const RootNavigator = ({isLoggedIn}) => (
-  <RootStack.Navigator headerMode="none">
+  <RootStack.Navigator screenOptions={{headerShown: false}}>
     {isLoggedIn ? (
       <RootStack.Screen name="RootStack" component={AppNavigator} />
     ) : (
