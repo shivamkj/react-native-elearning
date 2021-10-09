@@ -20,11 +20,11 @@ const navigate = (item, navigation) => {
     case '2':
       navigation.navigate('TestInstruction', {
         name: item.title,
-        maxMark: item.examInfo.total_marks,
-        questions: item.examInfo.total_qtn,
-        time: item.examInfo.exam_duration,
+        maxMark: item.exam_info.total_marks,
+        questions: item.exam_info.total_qtn,
+        time: item.exam_info.exam_duration,
         examId: item.id,
-        eid: item.examInfo.eid,
+        eid: item.exam_info.eid,
       });
       break;
   }

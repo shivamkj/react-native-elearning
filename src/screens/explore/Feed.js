@@ -98,7 +98,7 @@ const Feed = () => {
             <FlatList
               data={data.free_resource_new}
               renderItem={renderResources}
-              keyExtractor={item => item.exam_id}
+              keyExtractor={item => item.id + item.type}
               horizontal
               showsHorizontalScrollIndicator={false}
               ListEmptyComponent={<Text>No free Resources Found</Text>}

@@ -9,7 +9,7 @@ import OfflineIndicator from './components/OfflineIndicator';
 import SplashScreen from 'react-native-splash-screen';
 import {getAuthDetails} from './utils/authStorage';
 import {setHeader} from './api/client';
-import {configureNotification} from './utils/notification';
+import {configureFirebaseNotif} from './utils/notification';
 import {getPurchasedCourses} from './api/afterPurchase';
 import {navigationRef} from './utils/rootNavigator';
 
@@ -40,7 +40,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (isStarting == false) configureNotification();
+    if (isStarting == false) configureFirebaseNotif();
   }, [isStarting]);
 
   const showAlert = () =>

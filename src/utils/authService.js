@@ -2,6 +2,7 @@ import {getPurchasedCourses} from '../api/afterPurchase';
 import {removeHeader, setHeader} from '../api/client';
 import {removeUser, storeAuthDetails, storeUserDetails} from './authStorage';
 import messaging from '@react-native-firebase/messaging';
+import PushNotification from 'react-native-push-notification';
 
 const logoutUser = async dispatch => {
   await removeHeader();
@@ -18,12 +19,19 @@ const loginUser = async (userId, accessToken, fullName, email, dispatch) => {
   if (data.response == 100 && data.course.length >= 1) {
     const courses = data.course;
     dispatch({type: 'paidCourses', payload: courses});
+
+    // configure Notification
     for (var i = 0; i < courses.length; i++) {
       await messaging().subscribeToTopic(`course_id_${courses[i].course_id}`);
     }
-
+    PushNotification.createChannel({
+      channelId: 'edua-local',
+      channelName: 'Edua',
+    });
     await messaging().subscribeToTopic('example');
+    
   }
+
   await dispatch({type: 'auth', payload: true});
 };
 
